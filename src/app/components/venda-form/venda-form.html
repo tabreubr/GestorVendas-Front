@@ -1,1 +1,38 @@
-<p>venda-form works!</p>
+<h2>Registrar Venda</h2>
+
+<form (ngSubmit)="adicionarItem()" class="venda-form">
+  <label>Produto:</label>
+  <select [(ngModel)]="itemSelecionado.produto" name="produto" required>
+    <option [ngValue]="null" disabled selected>Selecione um produto</option>
+    <option *ngFor="let p of produtos" [ngValue]="p">
+      {{ p.nome }} (Estoque: {{ p.quantidade }})
+    </option>
+  </select>
+
+  <label>Quantidade:</label>
+  <input type="number"
+         [(ngModel)]="itemSelecionado.quantidade"
+         name="quantidade"
+         min="1"
+         [max]="itemSelecionado.produto?.quantidade || 1"
+         required />
+
+  <button type="submit">Adicionar ao Carrinho</button>
+</form>
+
+<!-- Carrinho -->
+<h3>Carrinho</h3>
+<ul class="carrinho">
+  <li *ngFor="let item of carrinho; let i = index">
+    {{ item.produto.nome }} — Quantidade: {{ item.quantidade }}
+    <button (click)="removerItem(i)" class="remover">Remover</button>
+  </li>
+</ul>
+
+<!-- Botão de registrar -->
+<button (click)="registrarVenda()" [disabled]="carrinho.length === 0">
+  Registrar Venda
+</button>
+
+<div *ngIf="mensagemSucesso" class="sucesso">{{ mensagemSucesso }}</div>
+<div *ngIf="mensagemErro" class="erro">{{ mensagemErro }}</div>

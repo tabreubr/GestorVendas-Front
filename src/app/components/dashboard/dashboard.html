@@ -1,134 +1,66 @@
-<h1>GestorVendas</h1>
-<div class="dashboard-grid">
+<div class="dashboard-content">
+  <h2>Dashboard</h2>
 
-
-  <!-- Card 1: Adicionar Produto -->
-  <div class="card">
-    <h3>Adicionar Produto</h3>
-    <form (ngSubmit)="adicionarProduto()">
-      <div class="form-group">
-        <label>Nome:</label>
-        <input type="text" [(ngModel)]="novoProduto.nome" name="nome" placeholder="Nome do produto" required>
-      </div>
-
-      <div class="form-group">
-        <label>Descrição:</label>
-        <input type="text" [(ngModel)]="novoProduto.descricao" name="descricao" placeholder="Descrição do produto" required>
-      </div>
-
-      <div class="form-group">
-        <label>Quantidade:</label>
-        <input type="number" [(ngModel)]="novoProduto.quantidade" name="quantidade" placeholder="Quantidade em estoque" required>
-      </div>
-
-      <div class="form-group">
-        <label>Preço:</label>
-        <input type="number" [(ngModel)]="novoProduto.preco" name="preco" placeholder="Preço unitário (R$)" step="0.01" required>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Salvar Produto</button>
-    </form>
+  <!-- Cards de resumo -->
+  <div class="cards">
+    <div class="card">
+      <h3>Total Produtos</h3>
+      <p>{{ totalProdutos }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Vendas</h3>
+      <p>{{ totalVendas }}</p>
+    </div>
   </div>
 
-  <!-- Card 2: Registrar Venda -->
-  <div class="card">
-    <h3>Registrar Venda</h3>
-    <form (ngSubmit)="registrarVenda()">
-      <div class="form-group">
-        <label>Produto:</label>
-        <select [(ngModel)]="itemTemp.produto" name="produto" required>
-          <option [ngValue]="null" disabled selected>Selecione o produto</option>
-          <option *ngFor="let p of produtos" [ngValue]="p">{{ p.nome }} - {{ p.quantidade }} em estoque</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Quantidade:</label>
-        <input type="number" [(ngModel)]="itemTemp.quantidade" name="quantidade" placeholder="Digite a quantidade" min="1" required>
-      </div>
-
-      <button type="button" class="btn btn-success" (click)="adicionarItemVenda()">Adicionar ao Carrinho</button>
-
-      <table *ngIf="itensVenda.length" class="cart-table">
+  <!-- Tabelas recentes -->
+  <div class="recent-tables">
+    <!-- Últimos produtos adicionados -->
+    <div class="table-container">
+      <h3>Últimos Produtos</h3>
+      <table>
         <thead>
           <tr>
-            <th>Produto</th>
+            <th>Nome</th>
+            <th>Descrição</th>
             <th>Quantidade</th>
-            <th>Preço Unitário</th>
-            <th>Subtotal</th>
-            <th>Remover</th>
+            <th>Preço</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itensVenda; let i = index">
-            <td>{{ item.produto?.nome || '-' }}</td>
-            <td><input type="number" [(ngModel)]="item.quantidade" (change)="atualizarQuantidade(i, item.quantidade)" min="1"></td>
-            <td>{{ item.produto?.preco | currency:'BRL' }}</td>
-            <td>{{ (item.produto?.preco || 0) * (item.quantidade || 0) | currency:'BRL' }}</td>
-            <td><button type="button" class="btn btn-danger" (click)="removerItemVenda(i)">X</button></td>
+          <tr *ngFor="let p of produtosRecentes">
+            <td>{{ p.nome }}</td>
+            <td>{{ p.descricao }}</td>
+            <td>{{ p.quantidade }}</td>
+            <td>{{ p.preco | currency:'BRL' }}</td>
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <div *ngIf="itensVenda.length" class="cart-total">
-        <h4>Total: {{ getTotalVenda() | currency:'BRL' }}</h4>
-        <button type="submit" class="btn btn-success">Registrar Venda</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- Card 3: Produtos em Estoque -->
-  <div class="card">
-    <h3>Produtos em Estoque</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Preço</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of produtosLimit">
-          <td>{{ p?.nome || '-' }}</td>
-          <td>{{ p?.descricao || '-' }}</td>
-          <td>{{ p?.quantidade || 0 }}</td>
-          <td>{{ p?.preco || 0 | currency:'BRL' }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="btn-group">
-      <button *ngIf="produtosLimit.length < produtos.length" class="btn btn-info" (click)="verMaisProdutos()">Ver Mais</button>
-      <button *ngIf="produtosLimit.length" class="btn btn-danger" (click)="limparProdutosExibidos()">Limpar</button>
+    <!-- Últimas vendas -->
+    <div class="table-container">
+      <h3>Últimas Vendas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Itens</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of vendasRecentes">
+            <td>{{ v.dataHora | date:'short' }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let i of v.itens">{{ i.produto.nome }} ({{ i.quantidade }})</li>
+              </ul>
+            </td>
+            <td>{{ calcularTotalVenda(v) | currency:'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <!-- Card 4: Últimas Movimentações -->
-  <div class="card">
-    <h3>Últimas Movimentações</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Produto</th>
-          <th>Quantidade</th>
-          <th>Data</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let v of vendasLimit">
-          <td>{{ v.itens?.[0]?.produto?.nome || '-' }}</td>
-          <td>{{ v.itens?.[0]?.quantidade || 0 }}</td>
-          <td>{{ v.dataHora | date:'short' }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="btn-group">
-      <button *ngIf="vendasLimit.length < vendas.length" class="btn btn-info" (click)="verMaisVendas()">Ver Mais</button>
-      <button *ngIf="vendasLimit.length" class="btn btn-danger" (click)="limparVendasExibidas()">Limpar</button>
-    </div>
-  </div>
-
 </div>

@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { Dashboard } from './components/dashboard/dashboard';
-import { ProdutoList } from './components/produto-list/produto-list';
-import { ProdutoForm } from './components/produto-form/produto-form';
-import { VendaForm } from './components/venda-form/venda-form';
-
+import { Routes } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard';
+import { ProdutoFormComponent } from './components/produto-form/produto-form';
+import { VendaFormComponent } from './components/venda-form/venda-form';
 
 export const routes: Routes = [
-  { path: 'dashboard', component: Dashboard },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'produtos', component: ProdutoFormComponent },
+  { path: 'vendas', component: VendaFormComponent }
 ];

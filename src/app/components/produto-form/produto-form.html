@@ -1,1 +1,26 @@
-<p>produto-form works!</p>
+<h2>Adicionar Produto</h2>
+<form (ngSubmit)="adicionarProduto()">
+  <label>Nome:</label>
+  <input type="text" [(ngModel)]="produto.nome" name="nome" required />
+
+  <label>Descrição:</label>
+  <input type="text" [(ngModel)]="produto.descricao" name="descricao" required />
+
+  <label>Quantidade:</label>
+  <input type="number" [(ngModel)]="produto.quantidade" name="quantidade" required />
+
+  <label>Preço:</label>
+  <input type="number" [(ngModel)]="produto.preco" name="preco" step="0.01" required />
+
+  <button type="submit">Adicionar</button>
+</form>
+
+<div *ngIf="sucesso">Produto adicionado com sucesso!</div>
+<div *ngIf="erro">{{ erro }}</div>
+
+<h3>Lista de Produtos</h3>
+<ul>
+  <li *ngFor="let p of produtos">
+    {{ p.nome }} - {{ p.quantidade }} unidades - R$ {{ p.preco.toFixed(2) }}
+  </li>
+</ul>

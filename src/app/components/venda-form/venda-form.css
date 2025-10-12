@@ -1,0 +1,64 @@
+form.venda-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+input, select {
+  padding: 5px;
+  font-size: 1rem;
+}
+
+button {
+  width: 150px;
+  padding: 10px;
+  background-color: #2d2d2d;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+.carrinho {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  max-width: 400px;
+}
+
+.carrinho li {
+  background: #f4f4f4;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button.remover {
+  background-color: #a00;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.remover:hover {
+  background-color: #c00;
+}
+
+.sucesso {
+  color: green;
+  margin-top: 10px;
+}
+
+.erro {
+  color: red;
+  margin-top: 10px;
+}
