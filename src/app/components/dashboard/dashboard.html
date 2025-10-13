@@ -1,7 +1,7 @@
 <div class="dashboard-content">
   <h2>Dashboard</h2>
 
-  <!-- Cards de resumo -->
+  <!-- Cards -->
   <div class="cards">
     <div class="card">
       <h3>Total Produtos</h3>
@@ -13,11 +13,11 @@
     </div>
   </div>
 
-  <!-- Tabelas recentes -->
+  <!-- Tabelas -->
   <div class="recent-tables">
-    <!-- Últimos produtos adicionados -->
+    <!-- Últimos produtos -->
     <div class="table-container">
-      <h3>Últimos Produtos</h3>
+      <h3>Últimos Produtos Adicionados</h3>
       <table>
         <thead>
           <tr>
@@ -45,20 +45,29 @@
         <thead>
           <tr>
             <th>Data</th>
-            <th>Itens</th>
             <th>Total</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let v of vendasRecentes">
-            <td>{{ v.dataHora | date:'short' }}</td>
-            <td>
-              <ul>
-                <li *ngFor="let i of v.itens">{{ i.produto.nome }} ({{ i.quantidade }})</li>
-              </ul>
-            </td>
-            <td>{{ calcularTotalVenda(v) | currency:'BRL' }}</td>
-          </tr>
+          <ng-container *ngFor="let v of vendasRecentes">
+            <tr (click)="toggleDetalhes(v)" class="linha-venda">
+              <td>{{ v.dataHora | date:'short' }}</td>
+              <td>{{ v.total | currency:'BRL' }}</td>
+            </tr>
+
+            <tr *ngIf="v.expandido" class="detalhes-venda">
+              <td colspan="2">
+                <div class="card-detalhe">
+                  <h4>Itens da Venda</h4>
+                  <ul>
+                    <li *ngFor="let i of v.itens">
+                      {{ i.produto.nome }} - {{ i.quantidade }}x ({{ i.produto.preco | currency:'BRL' }})
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>

@@ -58,19 +58,26 @@ export class VendaFormComponent implements OnInit {
   }
 
   registrarVenda() {
-    const itens = this.carrinho.map(item => ({
-      produtoId: item.produto.id!,
+  const vendaPayload = {
+    itens: this.carrinho.map(item => ({
+      produto: item.produto.id!,  // nome igual ao DTO Java
       quantidade: item.quantidade
-    }));
+    }))
+  };
 
-    this.vendaService.registrar(itens).subscribe({
-      next: () => {
-        this.mensagemSucesso = 'Venda registrada com sucesso!';
-        this.carrinho = [];
-      },
-      error: (err) => {
-        this.mensagemErro = 'Erro ao registrar venda: ' + err.message;
-      }
-    });
-  }
+    console.log('Payload enviado para API:', JSON.stringify(vendaPayload, null, 2));
+
+
+  this.vendaService.registrar(vendaPayload).subscribe({
+    next: () => {
+      this.mensagemSucesso = 'Venda registrada com sucesso!';
+      this.carrinho = [];
+      this.mensagemErro = '';
+    },
+    error: (err) => {
+      console.error(err);
+      this.mensagemErro = 'Erro ao registrar venda: ' + (err.error?.message || err.message);
+    }
+  });
+}
 }

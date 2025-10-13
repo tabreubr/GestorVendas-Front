@@ -13,7 +13,7 @@ export class VendaService {
     return this.http.get<Venda[]>(this.baseUrl);
   }
 
-  registrar(itens: { produtoId: number; quantidade: number }[]): Observable<Venda> {
-    return this.http.post<Venda>(this.baseUrl, { itens });
+  registrar(vendaPayload: any): Observable<Venda> {
+    return this.http.post<Venda>(this.baseUrl, vendaPayload);
   }
 }

@@ -1,26 +1,77 @@
-<h2>Adicionar Produto</h2>
-<form (ngSubmit)="adicionarProduto()">
-  <label>Nome:</label>
-  <input type="text" [(ngModel)]="produto.nome" name="nome" required />
+<div class="produto-form-container">
 
-  <label>Descrição:</label>
-  <input type="text" [(ngModel)]="produto.descricao" name="descricao" required />
+  <!-- ================= Botão Adicionar Produto ================= -->
+  <div class="card produto-card">
+    <button class="btn-verde" (click)="abrirModalAdicionar()">Adicionar Produto</button>
+  </div>
 
-  <label>Quantidade:</label>
-  <input type="number" [(ngModel)]="produto.quantidade" name="quantidade" required />
+  <!-- ================= Campo de pesquisa ================= -->
+  <div class="filtro-produto">
+    <input type="text" [(ngModel)]="filtroNome" placeholder="Pesquisar por nome" />
+    <button class="btn-verde" (click)="consultarPorNome()">Pesquisar</button>
+    <button class="btn-cinza" (click)="consultarTodos()">Todos</button>
+  </div>
 
-  <label>Preço:</label>
-  <input type="number" [(ngModel)]="produto.preco" name="preco" step="0.01" required />
+  <!-- ================= Lista de Produtos ================= -->
+  <div class="lista-produtos">
+    <div class="produto-card" *ngFor="let p of produtos" (click)="abrirEdicaoProduto(p)">
+      <div class="produto-info">
+        <strong>{{ p.nome }}</strong>
+        <p>{{ p.descricao }}</p>
+        <span>Quantidade: {{ p.quantidade }}</span>
+        <span>Preço: {{ p.preco | currency:'BRL' }}</span>
+      </div>
+      <div class="produto-acoes">
+        <button (click)="abrirReposicaoProduto(p); $event.stopPropagation()" class="btn-verde">Repor Estoque</button>
+        <button (click)="removerProduto(p); $event.stopPropagation()" class="btn-vermelho">Remover</button>
+      </div>
+    </div>
+  </div>
 
-  <button type="submit">Adicionar</button>
-</form>
+  <!-- ================= Modal Adicionar Produto ================= -->
+  <div class="modal" *ngIf="modalAdicionar">
+    <div class="modal-content">
+      <h4>Adicionar Produto</h4>
+      <form (ngSubmit)="adicionarProduto()">
+        <input type="text" [(ngModel)]="novoProduto.nome" name="nome" placeholder="Nome" required />
+        <input type="text" [(ngModel)]="novoProduto.descricao" name="descricao" placeholder="Descrição" required />
+        <input type="number" [(ngModel)]="novoProduto.quantidade" name="quantidade" placeholder="Quantidade" required />
+        <input type="number" [(ngModel)]="novoProduto.preco" name="preco" placeholder="Preço" step="0.01" required />
+        <div class="modal-buttons">
+          <button type="submit" class="btn-verde">Adicionar</button>
+          <button type="button" class="btn-vermelho" (click)="fecharModalAdicionar()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-<div *ngIf="sucesso">Produto adicionado com sucesso!</div>
-<div *ngIf="erro">{{ erro }}</div>
+  <!-- ================= Modal Edição Produto ================= -->
+  <div class="modal" *ngIf="produtoEmEdicao">
+    <div class="modal-content">
+      <h4>Editar Produto</h4>
+      <form (ngSubmit)="confirmarEdicaoProduto()">
+        <input type="text" [(ngModel)]="produtoEmEdicao.nome" name="nome" placeholder="Nome" required />
+        <input type="text" [(ngModel)]="produtoEmEdicao.descricao" name="descricao" placeholder="Descrição" required />
+        <input type="number" [(ngModel)]="produtoEmEdicao.quantidade" name="quantidade" placeholder="Quantidade" required />
+        <input type="number" [(ngModel)]="produtoEmEdicao.preco" name="preco" placeholder="Preço" step="0.01" required />
+        <div class="modal-buttons">
+          <button type="submit" class="btn-verde">Salvar</button>
+          <button type="button" class="btn-vermelho" (click)="fecharEdicaoProduto()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-<h3>Lista de Produtos</h3>
-<ul>
-  <li *ngFor="let p of produtos">
-    {{ p.nome }} - {{ p.quantidade }} unidades - R$ {{ p.preco.toFixed(2) }}
-  </li>
-</ul>
+  <!-- ================= Modal Reposição Estoque ================= -->
+  <div class="modal" *ngIf="produtoEmReposicao">
+    <div class="modal-content">
+      <h4>Repor Estoque - {{ produtoEmReposicao.nome }}</h4>
+      <input type="number" [(ngModel)]="quantidadeReposicao" placeholder="Quantidade" />
+      <div class="modal-buttons">
+        <button class="btn-verde" (click)="confirmarReposicaoProduto()">Confirmar</button>
+        <button class="btn-vermelho" (click)="fecharReposicaoProduto()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   totalVendas: number = 0;
 
   produtosRecentes: Produto[] = [];
-  vendasRecentes: Venda[] = [];
+  vendasRecentes: any[] = [];
 
   constructor(
     private produtoService: ProdutoService,
@@ -29,22 +29,20 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Produtos
     this.produtoService.listar().subscribe((res) => {
       this.produtos = res;
       this.totalProdutos = res.length;
-      this.produtosRecentes = res.slice(-5).reverse(); // últimos 5 produtos
+      this.produtosRecentes = res.slice(-5).reverse();
     });
 
-    // Vendas
     this.vendaService.listar().subscribe((res) => {
-      this.vendas = res;
+      this.vendas = res.map((v: any) => ({ ...v, expandido: false }));
       this.totalVendas = res.length;
-      this.vendasRecentes = res.slice(-5).reverse(); // últimas 5 vendas
+      this.vendasRecentes = this.vendas.slice(-5).reverse();
     });
   }
 
-  calcularTotalVenda(venda: Venda): number {
-    return venda.itens.reduce((acc: number, i: ItemVenda) => acc + i.produto.preco * i.quantidade, 0);
+  toggleDetalhes(venda: any): void {
+    venda.expandido = !venda.expandido;
   }
 }
