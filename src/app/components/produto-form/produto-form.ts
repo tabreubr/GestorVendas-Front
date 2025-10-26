@@ -130,20 +130,21 @@ export class ProdutoFormComponent {
   }
 
   confirmarEdicaoProduto() {
-  if (!this.produtoEmEdicao) return;
+    if (!this.produtoEmEdicao) return;
 
-  this.produtoService.atualizar(this.produtoEmEdicao.id!, this.produtoEmEdicao)
-    .subscribe({
+    this.produtoService.atualizar(this.produtoEmEdicao.id!, this.produtoEmEdicao).subscribe({
       next: (atualizado) => {
+        // console.log('Atualizado: ', atualizado);
         // Cria uma nova array com referência nova
-        this.produtos = this.produtos.map(p =>
-          p.id === atualizado.id ? { ...atualizado } : p
-        );
+        this.produtos = this.produtos.map((p) => {
+        // console.log('Produto: ', p);
+          return p.id === this.produtoEmEdicao?.id ? { ...this.produtoEmEdicao! } : p;
+        });
 
         // Fecha o modal
         this.fecharEdicaoProduto();
       },
-      error: (err) => this.erro = 'Erro ao atualizar produto: ' + err.message
+      error: (err) => (this.erro = 'Erro ao atualizar produto: ' + err.message),
     });
-}
+  }
 }
