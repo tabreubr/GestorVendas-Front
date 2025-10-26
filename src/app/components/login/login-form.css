@@ -1,0 +1,109 @@
+/* Container centralizado */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f6fa, #e9ecf3);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Cartão de login */
+.login-card {
+  background: #fff;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinha elementos horizontalmente */
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Título */
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.title span {
+  color: #007bff;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Formulário centralizado */
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza campos e botão */
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza inputs dentro do grupo */
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+input {
+  width: 90%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.2s;
+  font-size: 0.9rem;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+/* Botão */
+.btn-login {
+  width: 95%;
+  background: #007bff;
+  color: #fff;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 0.5rem;
+}
+
+.btn-login:hover {
+  background: #0056b3;
+}
+
+/* Erro */
+.error {
+  color: #e74c3c;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+}

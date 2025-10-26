@@ -1,0 +1,29 @@
+<nav class="sidebar">
+  <div>
+    <h2 class="sidebar-title">GestorVendas</h2>
+    <ul class="sidebar-menu">
+      <li [class.active]="isActive('/dashboard')">
+        <a (click)="router.navigate(['/dashboard'])">
+          <span class="material-icons">dashboard</span> Dashboard
+        </a>
+      </li>
+      <li [class.active]="isActive('/produtos')">
+        <a (click)="router.navigate(['/produtos'])">
+          <span class="material-icons">inventory_2</span> Produtos
+        </a>
+      </li>
+      <li [class.active]="isActive('/vendas')">
+        <a (click)="router.navigate(['/vendas'])">
+          <span class="material-icons">shopping_cart</span> Vendas
+        </a>
+      </li>
+    </ul>
+  </div>
+  <button class="btn-logout" (click)="logout()">
+    <span class="material-icons">logout</span> Sair
+  </button>
+</nav>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

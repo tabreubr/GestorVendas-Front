@@ -1,0 +1,94 @@
+/* ================== Sidebar ================== */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #f5f6fa; /* claro */
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* conteúdo e botão no final */
+  padding: 20px 15px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #00a210;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar-menu li {
+  margin-bottom: 15px;
+}
+
+.sidebar-menu li a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active a {
+  background-color: #e0e0e0; /* contraste leve */
+  color: #111;
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+/* ================== Botão de Logout ================== */
+.btn-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background-color: #e74c3c; /* vermelho discreto */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 20px; /* espaço entre menu e botão */
+}
+
+.btn-logout:hover {
+  background-color: #c0392b;
+}
+
+/* ================== Conteúdo Principal ================== */
+.main-content {
+  margin-left: 220px; /* espaço da sidebar */
+  padding: 20px;
+}
+
+/* ================== Responsividade ================== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+    padding: 15px 10px;
+  }
+
+  .main-content {
+    margin-left: 180px;
+    padding: 15px;
+  }
+}
