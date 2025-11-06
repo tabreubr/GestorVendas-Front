@@ -36,11 +36,26 @@ export class DashboardComponent implements OnInit {
     });
 
     this.vendaService.listar().subscribe((res) => {
-      this.vendas = res.map((v: any) => ({ ...v, expandido: false }));
+      this.vendas = res.map((v: any) => this.criarVendaIndependente(v));
       this.totalVendas = res.length;
       this.vendasRecentes = this.vendas.slice(-5).reverse();
     });
   }
+
+  private criarVendaIndependente(venda: any): any {
+  return {
+    ...venda,
+    expandido: false,
+    // Se a venda tem itens, cria cópias independentes
+    itens: venda.itens ? venda.itens.map((item: any) => ({
+      ...item,
+      // Garante que usamos os dados snapshot da venda, não do produto atual
+      nomeProduto: item.nomeProduto || item.produto?.nome,
+      precoUnitario: item.precoUnitario || item.produto?.preco,
+      total: item.total || (item.quantidade * (item.precoUnitario || item.produto?.preco))
+    })) : []
+  };
+}
 
   toggleDetalhes(venda: any): void {
     venda.expandido = !venda.expandido;

@@ -59,11 +59,22 @@
               <td colspan="2">
                 <div class="card-detalhe">
                   <h4>Itens da Venda</h4>
-                  <ul>
-                    <li *ngFor="let i of v.itens">
-                      {{ i.produto.nome }} - {{ i.quantidade }}x ({{ i.produto.preco | currency:'BRL' }})
-                    </li>
-                  </ul>
+
+                  <div class="lista-itens">
+                    <div class="item-venda-cabecalho">
+                      <span>Produto</span>
+                      <span>Qtd</span>
+                      <span>Preço (R$)</span>
+                      <span>Subtotal (R$)</span>
+                    </div>
+
+                    <div *ngFor="let i of v.itens" class="item-venda-card">
+                      <span class="item-nome">{{ i.produto.nome }}</span>
+                      <span>{{ i.quantidade }}</span>
+                      <span>{{ i.produto.preco | number: '1.2-2' }}</span>
+                      <span>{{ (i.quantidade * i.produto.preco) | number: '1.2-2' }}</span>
+                    </div>
+                  </div>
                 </div>
               </td>
             </tr>

@@ -50,8 +50,11 @@ export class ProdutoFormComponent {
   adicionarProduto() {
     this.produtoService.adicionar(this.novoProduto).subscribe({
       next: (p) => {
-        // Adiciona o novo produto na lista automaticamente
-        this.produtos.push(p);
+        // Substitua estas duas linhas:
+        // this.produtos.push(p);
+        // Por:
+        this.consultarTodos(); // ← Esta é a única mudança necessária
+
         this.sucesso = true;
         this.novoProduto = { nome: '', descricao: '', quantidade: 0, preco: 0 };
         this.fecharModalAdicionar();
@@ -137,7 +140,7 @@ export class ProdutoFormComponent {
         // console.log('Atualizado: ', atualizado);
         // Cria uma nova array com referência nova
         this.produtos = this.produtos.map((p) => {
-        // console.log('Produto: ', p);
+          // console.log('Produto: ', p);
           return p.id === this.produtoEmEdicao?.id ? { ...this.produtoEmEdicao! } : p;
         });
 

@@ -1,128 +1,357 @@
+/* ================= Configuração Geral ================= */
 .container-venda {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #f8fafc;
-  border-radius: 16px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* espaçamento entre seções */
+  padding: 30px;
   font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  border-radius: 10px;
 }
 
+/* ================= Títulos ================= */
 .titulo {
-  text-align: center;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 1rem;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.card-venda, .card-carrinho {
-  background: #ffffff;
+/* ================= Card Principal do Formulário (Registrar Venda) ================= */
+.card-venda {
+  background: white;
+  padding: 25px 30px;
   border-radius: 12px;
-  padding: 1.2rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  max-width: 500px;              /* 🔹 Tamanho limitado do card */
+  margin: 0 auto;                /* 🔹 Centraliza horizontalmente */
+  align-self: center;            /* 🔹 Centraliza dentro do container flex */
 }
 
+.card-venda:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ================= Formulário de Registrar Venda ================= */
 .venda-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 15px;
+   text-align: center;
+  justify-content: center;
+  
+  align-items: stretch;
+  width: 90%;
 }
 
-.campo {
+.venda-form .campo {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
-.campo label {
-  font-weight: 500;
-  color: #334155;
-  margin-bottom: 0.4rem;
+.venda-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
 }
 
-.campo select,
-.campo input {
-  border: 1px solid #cbd5e1;
+.venda-form input,
+.venda-form select {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 0.6rem;
-  font-size: 0.95rem;
+  transition: all 0.25s ease;
 }
 
-.btn-adicionar {
-  background-color: #2563eb;
+.venda-form input:focus,
+.venda-form select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
+  outline: none;
+}
+
+/* Botões dentro do formulário */
+.venda-form button {
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 0.6rem;
+  padding: 10px 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.25s ease-in-out;
+  margin-top: 10px;
 }
 
-.btn-adicionar:hover {
-  background-color: #1d4ed8;
+.venda-form button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
 }
 
+/* ================= Botões ================= */
+button {
+  cursor: pointer;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.25s ease-in-out;
+}
+
+.btn-adicionar,
+.btn-registrar,
+.btn-paginacao {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-adicionar:hover,
+.btn-registrar:hover,
+.btn-paginacao:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.btn-remover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-remover:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+/* ================= Lista do Carrinho ================= */
 .lista-carrinho {
   list-style: none;
+  margin: 15px 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .item-carrinho {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f1f5f9;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  background: #f8f9fa;
+  padding: 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: 0.2s ease;
 }
 
-.btn-remover {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-  transition: 0.2s;
+.item-carrinho:hover {
+  background-color: #e9f7ef;
+  transform: scale(1.01);
 }
 
-.btn-remover:hover {
-  background-color: #dc2626;
-}
-
-.btn-registrar {
-  margin-top: 1rem;
-  width: 100%;
-  background-color: #16a34a;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn-registrar:hover {
-  background-color: #15803d;
-}
-
+/* ================= Alertas ================= */
 .alerta {
-  text-align: center;
-  padding: 0.8rem;
-  border-radius: 8px;
-  font-weight: 600;
-  margin-top: 1rem;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
 .alerta.sucesso {
-  background-color: #dcfce7;
-  color: #166534;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .alerta.erro {
-  background-color: #fee2e2;
-  color: #b91c1c;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* ================= Filtros (Histórico de Vendas) ================= */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.filtros input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+}
+
+.datas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ================= Tabela de Vendas ================= */
+.tabela-vendas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabela-vendas th {
+  text-align: left;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.tabela-vendas td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.linha-venda {
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.linha-venda:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.01);
+}
+
+.detalhes-venda td {
+  background-color: #f8f9fa;
+}
+
+.card-detalhe {
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= Total Geral ================= */
+.linha-total-geral td {
+  font-weight: 700;
+  background-color: #e9f7ef;
+}
+
+/* ================= Paginação ================= */
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-paginacao[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ================= Animação de filtro ================= */
+.tabela-vendas tbody {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= Responsividade ================= */
+@media (max-width: 768px) {
+  .venda-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .datas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabela-vendas th,
+  .tabela-vendas td {
+    font-size: 0.9rem;
+  }
+}
+
+/* ================= Itens da Venda Expandido ================= */
+.lista-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.item-venda-cabecalho {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.item-venda-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  align-items: center;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-venda-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.item-nome {
+  font-weight: 500;
+  color: #222;
+}
+
+/* Pequeno ajuste de espaçamento entre cards */
+.card-detalhe {
+  background-color: white;
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-top: 5px;
+  animation: fadeDown 0.3s ease;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,4 +1,3 @@
-
 <div class="container-venda">
   <h2 class="titulo">Registrar Venda</h2>
 
@@ -16,14 +15,8 @@
 
       <div class="campo">
         <label>Quantidade:</label>
-        <input
-          type="number"
-          [(ngModel)]="itemSelecionado.quantidade"
-          name="quantidade"
-          min="1"
-          [max]="itemSelecionado.produto?.quantidade || 1"
-          required
-        />
+        <input type="number" [(ngModel)]="itemSelecionado.quantidade" name="quantidade" min="1"
+          [max]="itemSelecionado.produto?.quantidade || 1" required />
       </div>
 
       <button type="submit" class="btn-adicionar">Adicionar ao Carrinho</button>
@@ -35,8 +28,7 @@
     <ul class="lista-carrinho">
       <li *ngFor="let item of carrinho; let i = index" class="item-carrinho">
         <div>
-          <strong>{{ item.produto.nome }}</strong>  
-          <br>
+          <strong>{{ item.produto.nome }}</strong><br />
           <span>Quantidade: {{ item.quantidade }}</span>
         </div>
         <button (click)="removerItem(i)" class="btn-remover">Remover</button>
@@ -53,5 +45,85 @@
   </div>
   <div *ngIf="mensagemErro" class="alerta erro">
     {{ mensagemErro }}
+  </div>
+</div>
+
+<!-- HISTÓRICO DE VENDAS -->
+<div class="card-vendas">
+  <h3>Histórico de Vendas</h3>
+
+  <!-- FILTROS -->
+  <div class="filtros">
+    <div *ngIf="mensagemFiltro" class="alerta-erro" style="margin-bottom: 10px">
+      {{ mensagemFiltro }}
+    </div>
+
+    <input type="text" placeholder="Buscar por produto..." [(ngModel)]="filtroNome" (input)="aplicarFiltros()"
+      name="filtroNome" />
+
+    <div class="datas">
+      <label>De:</label>
+      <input type="date" [(ngModel)]="dataInicio" (change)="aplicarFiltros()" name="dataInicio" />
+      <label>Até:</label>
+      <input type="date" [(ngModel)]="dataFim" (change)="aplicarFiltros()" name="dataFim" />
+    </div>
+  </div>
+
+  <!-- TABELA DE VENDAS -->
+  <table class="tabela-vendas">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let v of vendasPaginadas">
+        <tr (click)="toggleDetalhes(v)" class="linha-venda">
+          <td>{{ v.dataHora | date: 'short' }}</td>
+          <td>{{ v.total | currency: 'BRL' }}</td>
+        </tr>
+
+        <tr *ngIf="v.expandido" class="detalhes-venda">
+          <td colspan="2">
+            <div class="card-detalhe">
+              <h4>Itens da Venda</h4>
+
+              <div class="lista-itens">
+                <div class="item-venda-cabecalho">
+                  <span>Produto</span>
+                  <span>Qtd</span>
+                  <span>Preço (R$)</span>
+                  <span>Subtotal (R$)</span>
+                </div>
+
+                <div *ngFor="let i of v.itens" class="item-venda-card">
+                  <span class="item-nome">{{ i.produto.nome }}</span>
+                  <span>{{ i.quantidade }}</span>
+                  <span>{{ i.produto.preco | number: '1.2-2' }}</span>
+                  <span>{{ (i.quantidade * i.produto.preco) | number: '1.2-2' }}</span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+
+      <tr class="linha-total-geral" *ngIf="vendasFiltradas.length > 0">
+        <td><strong>Total Filtrado</strong></td>
+        <td><strong>{{ totalGeral | currency: 'BRL' }}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PAGINAÇÃO -->
+  <div class="paginacao" *ngIf="totalPaginas > 1">
+    <button class="btn-paginacao" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">
+      Anterior
+    </button>
+    <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+    <button class="btn-paginacao" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">
+      Próxima
+    </button>
   </div>
 </div>
